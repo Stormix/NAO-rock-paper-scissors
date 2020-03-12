@@ -16,6 +16,8 @@ import stk.events
 import stk.services
 import stk.logging
 
+import cv2
+
 class DetermineUserAction(object):
     "NAOqi service example (set/get on a simple value)."
     APP_ID = "com.aldebaran.DetermineUserAction"
@@ -31,12 +33,15 @@ class DetermineUserAction(object):
     @qi.bind(returnType=qi.Void, paramsType=[qi.Int8])
     def set(self, level):
         "Set level"
-        self.level = level
+        self.level = level * 2
 
-    @qi.bind(returnType=qi.Int8, paramsType=[])
-    def get(self):
+    def determinedAction(self):
+        return "Rock"
+    
+    @qi.bind(returnType=qi.String, paramsType=[])
+    def getAction(self):
         "Get level"
-        return self.level
+        return self.determinedAction()
 
     @qi.bind(returnType=qi.Void, paramsType=[])
     def reset(self):
